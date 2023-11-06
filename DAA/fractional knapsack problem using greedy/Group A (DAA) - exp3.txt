@@ -1,0 +1,199 @@
+GROUP - A
+Assignment No: 03
+====================================================================
+Title:-
+Write a program to solve a fractional knapsack problem using greedy method. 
+=====================================================================
+Objective:-
+-To learn about fractional knapsack
+-To understand greedy method
+=====================================================================
+Theory:-
+In fractional knapsack, the items are broken in order to maximize the profit. The problem in 
+which break the item is known as a Fractional knapsack problem.
+
+*	What is fractional knapsack?
+The fractional knapsack problem is a classic problem in combinatorial optimization. If a set 
+of items are given, each with a weight and a value, the goal is to select a subset of the items 
+that maximises the value while keeping the total weight below or equal to a given limit.
+
+*	How fractional knapsack using greedy method works?
+In fractional knapsack using greedy approach, first calculate the ratio value/weight for each 
+item and then sort the item on the basis of this ratio. Take the item with the highest ratio and 
+add them until it can't add the next item as a whole and at the end add the next item as much 
+as possible which will always be the optimal solution to this problem.
+
+The greedy algorithm described below always gives an optimal solution to the job 
+sequencing problem-
+?	Step-01: For each item, compute its value / weight ratio.
+?	Step-02: Arrange all the items in decreasing order of their value / weight ratio.
+?	Step-03: Start putting the items into the knapsack beginning from the item with the 
+highest ratio.
+
+
+*	Practice problem based on fractional knapsack using greedy method
+?	Problem : For the given set of items and knapsack capacity = 16 kg, find the optimal 
+solution for the fractional knapsack problem making use of greedy approach.
+Item
+Weight
+Value
+I1
+6
+6
+I2
+10
+2
+I3
+3
+1
+I4
+5
+8
+I5
+1
+3
+I6
+3
+5
+
+?	Step 1: Compute the value/weight ratio for each item, which is also called "Density".
+Item
+Weight
+Value
+Density (V/W)
+I1
+6
+6
+1.000
+I2
+10
+2
+0.200
+I3
+3
+1
+0.333
+I4
+5
+8
+1.600
+I5
+1
+3
+3.000
+I6
+3
+5
+1.667
+
+?	Step 2: Sort all the items in decreasing order of their density value
+Item
+Weight
+Value
+Density (V/W)
+I5
+1
+3
+3.000
+I6
+3
+5
+1.667
+I4
+5
+8
+1.600
+I1
+6
+6
+1.000
+I3
+3
+1
+0.333
+I2
+10
+2
+0.200
+
+?	Step 3: Start filling the knapsack by putting the items into it one by one with the help of 
+Total weight and Total value for each item brought.
+Item
+Weight
+Value
+Total Weight
+Total brought 
+weight
+I5
+1
+3
+1.000
+3.000
+I6
+3
+5
+4.000
+8.000
+I4
+5
+8
+9.000
+16.000
+I1
+6
+6
+15.000
+22.000
+I3
+3
+1
+16.000
+22.333
+
+Now,
+knapsack will contain the following items-
+< I5 , I6 , I4 , I1, I3 >
+
+Total cost of the knapsack : 3.000+8.000+16.000+22.000+0.333= 22.333 units.    
+
+*	Algorithm: Algorithm GREEDY_FRACTIONAL_KNAPSACK(X, V, W, M)
+// Description : Solve the knapsack problem using greedy approach
+// Input: 
+X: An array of n items
+V: An array of profit associated with each item
+W: An array of weight associated with each item
+M: Capacity of knapsack
+
+// Output : 	
+SW: Weight of selected items
+SP: Profit of selected items
+// Items are presorted in decreasing order of pi = vi / wi ratio
+S ? F	  // Set of selected items, initially empty
+SW ? 0    // weight of selected items
+SP ? 0    // profit of selected items
+i ? 1
+while i = n do
+    if (SW + w[i]) = M then
+        S ? S ? X[i]                
+        SW ? SW + W[i]
+        SP ? SP + V[i]
+    else
+        frac ? (M - SW) / W[i]		
+        S ? S ? X[i] * frac	     // Add fraction of item X[i]
+        SP ? SP + V[i] * frac    // Add fraction of profit
+        SW ? SW + W[i] * frac    // Add fraction of weight
+    end
+    i ? i + 1
+end
+
+?	The time complexity of fractional knapsack using greedy method is O(NlogN).
+
+=====================================================================
+Conclusion:-
+Thus we have studied to how fractional knapsack using greedy method works. The use of greedy 
+method is solving a problem by selecting the best option available at the moment
+=====================================================================
+Laboratory Practice -III
+Prof. P. N. Pathak
+
+4	Department of Computer Engineering 	LoGMIEER, Nashik
