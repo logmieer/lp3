@@ -1,0 +1,131 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# Import necessary libraries
+import pandas as pd
+import seaborn as sns
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score, classification_report
+from sklearn.svm import SVC
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Read data from the "emails.csv" file into a DataFrame
+df = pd.read_csv('emails.csv')
+
+# Check the shape of the DataFrame
+df.shape
+
+# Display the first few rows of the DataFrame
+df.head()
+
+# Define input (x) and output (y) data
+x = df.drop(['Email No.', 'Prediction'], axis=1)
+y = df['Prediction']
+
+# Check the shape of the input data
+x.shape
+
+# Check data types of input data
+x.dtypes
+
+# Get unique data types in the input data
+set(x.dtypes)
+
+# Visualize class distribution using a countplot
+sns.countplot(x=y)
+
+# Get class counts for the output data
+y.value_counts()
+
+# Feature scaling using Min-Max scaling
+scaler = MinMaxScaler()
+x_scaled = scaler.fit_transform(x)
+
+# Split data into training and testing sets
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=0, test_size=0.25)
+
+# Check the shape of scaled input data
+x_scaled.shape
+
+# Check the shape of training data
+x_train.shape
+
+# Check the shape of testing data
+x_test.shape
+
+# Import the KNeighborsClassifier class
+from sklearn.neighbors import KNeighborsClassifier
+
+# Create a KNeighborsClassifier object with 5 neighbors
+knn = KNeighborsClassifier(n_neighbors=5)
+
+# Train the KNeighborsClassifier model on the training data
+knn.fit(x_train, y_train)
+
+# Predict on the test data
+y_pred = knn.predict(x_test)
+
+# Ignore future warnings
+from warnings import simplefilter
+simplefilter(action='ignore', category=FutureWarning)
+
+# Import evaluation metrics
+from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score, classification_report
+
+# Display the confusion matrix
+ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
+
+# Check the class counts in the test data
+y_test.value_counts()
+
+# Calculate the accuracy of the model
+accuracy_score(y_test, y_pred)
+
+# Print a classification report
+print(classification_report(y_test, y_pred))
+
+# Create a list to store error rates for different values of k
+error = []
+
+# Iterate through different values of k and calculate the error rate
+for k in range(1, 41):
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(x_train, y_train)
+    pred = knn.predict(x_test)
+    error.append(np.mean(pred != y_test)
+
+# Ignore future warnings
+simplefilter(action='ignore', category=FutureWarning)
+
+# Print the list of error rates
+error
+
+# Create a KNeighborsClassifier object with 1 neighbor
+knn = KNeighborsClassifier(n_neighbors=1)
+
+# Train the model
+knn.fit(x_train, y_train)
+
+# Predict on the test data
+y_pred = knn.predict(x_test)
+
+# Calculate the accuracy of the model
+accuracy_score(y_test, y_pred)
+
+# Import the Support Vector Classifier (SVC)
+from sklearn.svm import SVC
+
+# Create an SVC model with a radial basis function (RBF) kernel
+svm = SVC(kernel='rbf')
+
+# Train the model on the training data
+svm.fit(x_train, y_train)
+
+# Predict on the test data
+y_pred = svm.predict(x_test)
+
+# Calculate the accuracy of the model
+accuracy_score(y_test, y_pred)

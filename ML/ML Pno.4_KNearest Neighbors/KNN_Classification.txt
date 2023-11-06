@@ -1,0 +1,84 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# Import necessary libraries
+import pandas as pd
+import seaborn as sns
+
+# Read data from the "diabetes.csv" file into a DataFrame
+df = pd.read_csv('diabetes.csv')
+
+# Define input (x) and output (y) data
+x = df.drop('Outcome', axis=1)
+y = df['Outcome']
+
+# Visualize class distribution using a countplot
+sns.countplot(x=y)
+
+# Get class counts for the output data
+y.value_counts()
+
+# Feature scaling using Min-Max scaling
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+x_scaled = scaler.fit_transform(x)
+
+# Perform cross-validation by splitting the data into training and testing sets
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=0, test_size=0.25)
+
+# Import the KNeighborsClassifier class from scikit-learn
+from sklearn.neighbors import KNeighborsClassifier
+
+# Create a KNeighborsClassifier model with 5 neighbors
+knn = KNeighborsClassifier(n_neighbors=5)
+
+# Train the KNeighborsClassifier model on the training data
+knn.fit(x_train, y_train)
+
+# Import evaluation metrics
+from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay, classification_report
+
+# Predict on the test data
+y_pred = knn.predict(x_test)
+
+# Display the confusion matrix
+ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
+
+# Print a classification report
+print(classification_report(y_test, y_pred))
+
+# Create a list to store error rates for different values of k
+error = []
+
+# Iterate through different values of k and calculate the error rate
+for k in range(1, 41):
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(x_train, y_train)
+    pred = knn.predict(x_test)
+    error.append(np.mean(pred != y_test))
+
+# Print the list of error rates
+error
+
+# Plot the error rates for different values of k
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(16, 9))
+plt.xlabel('Value of K')
+plt.ylabel('Error')
+plt.grid()
+plt.xticks(range(1, 41))
+plt.plot(range(1, 41), error, marker='.')
+
+# Create a KNeighborsClassifier model with 33 neighbors
+knn = KNeighborsClassifier(n_neighbors=33)
+
+# Train the KNeighborsClassifier model on the training data
+knn.fit(x_train, y_train)
+
+# Predict on the test data
+y_pred = knn.predict(x_test)
+
+# Print a classification report for the model with 33 neighbors
+print(classification_report(y_test, y_pred))

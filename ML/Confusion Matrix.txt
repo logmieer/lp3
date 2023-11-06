@@ -1,0 +1,28 @@
+
+
+
+Precision: Precision is a measure of the accuracy of the positive predictions made by the model. It is calculated as the ratio of true positives (correctly predicted positive instances) to the sum of true positives and false positives (incorrectly predicted positive instances). In your example:
+
+Precision for class 0 (the first row) is 0.93, which means that 93% of the instances predicted as class 0 were correctly classified.
+Precision for class 1 (the second row) is 0.72, indicating that 72% of the instances predicted as class 1 were correctly classified.
+Recall: Recall, also known as sensitivity or true positive rate, measures the model's ability to correctly identify all the positive instances. It is calculated as the ratio of true positives to the sum of true positives and false negatives (positive instances that were incorrectly predicted as negative). In your example:
+
+Recall for class 0 is 0.87, meaning that the model correctly identified 87% of the actual class 0 instances.
+Recall for class 1 is 0.82, indicating that 82% of the actual class 1 instances were correctly identified.
+F1-Score: The F1-score is the harmonic mean of precision and recall. It provides a single score that balances both precision and recall. The F1-score is particularly useful when you want to find a balance between false positives and false negatives. It is calculated as:
+
+F1-Score = 2 * (Precision * Recall) / (Precision + Recall)
+
+In your example:
+
+F1-Score for class 0 is 0.90.
+F1-Score for class 1 is 0.76.
+Support: Support represents the number of instances in each class in the actual dataset. In your example:
+
+Class 0 has 929 instances.
+Class 1 has 364 instances.
+Accuracy: The overall accuracy is the proportion of correctly predicted instances in the entire dataset. It is calculated as the ratio of the total number of correct predictions to the total number of instances. In your example, the accuracy is 0.86, which means that the model correctly predicted 86% of the instances in the entire dataset.
+
+Macro Average (Macro Avg): This is the average of the precision, recall, and F1-score across all classes. In your example, the macro average precision, recall, and F1-score are 0.82, 0.85, and 0.83, respectively. It provides a measure of the overall performance of the model across all classes, giving each class equal weight.
+
+Weighted Average (Weighted Avg): This is a weighted average of the precision, recall, and F1-score, where the weights are determined by the number of instances in each class. It provides an overall performance measure while taking into account class imbalances. In your example, the weighted average precision, recall, and F1-score are 0.87, 0.86, and 0.86, respectively.

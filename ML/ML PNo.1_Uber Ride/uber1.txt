@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# Import necessary libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+# Read data from the "sales_data_sample.csv" file into a DataFrame
+df = pd.read_csv("sales_data_sample.csv", encoding='latin')
+
+# Get data types of the columns in the DataFrame
+df.dtypes
+
+# Select columns 3 and 4 as input data for clustering (X)
+X = df.iloc[:, [3, 4]].values
+
+# Display information about the DataFrame
+df.info()
+
+# Create an empty list to store Within-Cluster-Sum-of-Squares (WCSS) values
+wcss = []
+
+# Use a loop to calculate WCSS for different values of k (number of clusters)
+for i in range(1, 11):
+    # Initialize a KMeans clustering model with k clusters, k-means++ initialization, and a fixed random state
+    kmeans = KMeans(n_clusters=i, init="k-means++", random_state=42)
+    kmeans.fit(X)
+    # Calculate and append the WCSS value for the current k
+    wcss.append(kmeans.inertia_)
+
+# List of values of k for plotting
+ks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Plot the WCSS values for different values of k
+plt.plot(ks, wcss, 'bx-')
+plt.title("Elbow method")
+plt.xlabel("K value")
+plt.ylabel("WCSS")
+
+# Use the elbow method to determine the optimal number of clusters (k)
+# The "elbow" of the plot is where the WCSS starts to level off, indicating the optimal k value.
+
+# Standardize the input data to have mean=0 and variance=1 using the StandardScaler
+ss = StandardScaler()
+scaled = ss.fit_transform(X)
+
+# Create an empty list to store WCSS values
+wcss = []
+
+# Calculate WCSS for different values of k after standardization
+for i in range(1, 11):
+    clustering = KMeans(n_clusters=i, init="k-means++", random_state=42)
+    clustering.fit(scaled)
+    wcss.append(clustering.inertia_)
+
+# List of values of k for plotting
+ks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Plot the WCSS values for different values of k after standardization
+plt.plot(ks, wcss, 'bx-')
+plt.title("Elbow method")
+plt.xlabel("K value")
+plt.ylabel("WCSS")
+
+# The "elbow" of the plot can help determine the optimal number of clusters.
